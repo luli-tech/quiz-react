@@ -1,0 +1,46 @@
+.result-container {
+  text-align: center;
+  margin-top: 20vh;
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.result-content {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.result-heading {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.result-score {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.action-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: #0056b3;
+}

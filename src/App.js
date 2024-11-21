@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from "react";
+import "./App.css";
+import QuizInterface from "./components/Quizinterface";
+import WelcomePage from "./pages/WelcomePage";
+import ResultPage from "./pages/resultPage";
+import CategorySelection from "./pages/categorySelection";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+const App = () => {
+  let provider = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/category" element={<CategorySelection />} />
+        <Route path="/quizPage" element={<QuizInterface />} />
+        <Route path="/result" element={<ResultPage />} />
+      </Route>
+    )
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <RouterProvider router={provider} />
     </div>
   );
-}
+};
 
 export default App;
