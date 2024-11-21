@@ -34,11 +34,11 @@ const CategorySelection = () => {
         onChange={(e) => setNumberOfQuestions(e.target.value)}
       />
       {category && numberOfQuestions > 0 ? (
-        <NavLink
-          to={`/quizPage?category=${category}&numberOfQuestions=${numberOfQuestions}`}
+        <a
+          href={`/quizPage?category=${category}&numberOfQuestions=${numberOfQuestions}`}
         >
           <button>Start Quiz</button>
-        </NavLink>
+        </a>
       ) : (
         <p>Please select a category and number of questions.</p>
       )}
