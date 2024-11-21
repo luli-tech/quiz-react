@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./navbar.css";
+import Footer from "./footer";
 import { Outlet } from "react-router-dom";
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,6 +47,7 @@ const Navbar = () => {
       <div className="outlet">
         <Outlet />
       </div>
+      <Footer />
     </>
   );
 };

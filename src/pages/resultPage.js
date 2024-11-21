@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { resetQuiz } from "../redux/store";
 import "./resultPage.css";
+import { Link } from "react-router-dom";
 
 const ResultPage = () => {
   const { questions, selectedAnswers } = useSelector((state) => state.quiz);
@@ -43,9 +44,9 @@ const ResultPage = () => {
       </div>
 
       <div className="result-actions">
-        <a href="/quizPage" onClick={handleReset}>
+        <Link to="/quizPage" onClick={handleReset}>
           <button>Retake Quiz</button>
-        </a>
+        </Link>
         <a href="/category" onClick={handleReset}>
           <button>Take New Quiz</button>
         </a>

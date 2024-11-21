@@ -11,7 +11,7 @@ const WelcomePage = () => {
 
   return (
     <div className={`welcome-container ${isVisible ? "fade-in" : ""}`}>
-      <h1>Welcome to the Quiz App!</h1>
+      <h1>Welcome to the LULI Qurious</h1>
       <p>Test your knowledge with fun quizzes!</p>
       <NavLink to="/category">
         <button>Start Quiz</button>

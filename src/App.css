@@ -10,8 +10,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
   padding: 0 15px;
+}
+.result-container .result-actions a button {
+  width: fit-content;
 }
 h1,
 h2,
@@ -80,7 +83,6 @@ select {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .container {
     padding: 15px;
