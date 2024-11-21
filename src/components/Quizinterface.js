@@ -1,27 +1,32 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchData, next, previous, selectAnswer } from "../redux/store";
 import { useNavigate, useLocation } from "react-router-dom";
+import { fetchData, next, previous, selectAnswer } from "../redux/store";
+import "./QuizInterface.css";
 
 const QuizInterface = () => {
-  const { questions, status, currentQuestionIndex, selectedAnswers, results } =
-    useSelector((state) => state.mainSlice);
+  const { questions, currentQuestionIndex, selectedAnswers, status } =
+    useSelector((state) => state.quiz);
   const dispatch = useDispatch();
-  let navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { category, numberOfQuestions } = location.state || {}; // Access category and numberOfQuestions
+  const queryParams = new URLSearchParams(location.search);
+  const category = queryParams.get("category");
+  const numberOfQuestions = queryParams.get("numberOfQuestions");
 
-  // Fetch data based on the selected category
   useEffect(() => {
-    if (status === "idle") {
-      if (category && numberOfQuestions) {
-        dispatch(fetchData({ category, numberOfQuestions })); // Pass category and numberOfQuestions
-      }
+    if (status === "idle" && category && numberOfQuestions) {
+      dispatch(fetchData({ category, numberOfQuestions }));
     }
   }, [status, category, numberOfQuestions, dispatch]);
 
-  // Handle next button action
+  if (status === "loading") return <div>Loading...</div>;
+  if (status === "failed") return <div>Error loading questions.</div>;
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const userSelectedAnswer = selectedAnswers[currentQuestionIndex];
+
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       dispatch(next());
@@ -30,95 +35,55 @@ const QuizInterface = () => {
     }
   };
 
-  // Handle previous button action
-  const handlePrevious = () => {
-    dispatch(previous());
-  };
-
-  // Handle answer selection
   const handleAnswerSelection = (answer) => {
     dispatch(selectAnswer({ questionIndex: currentQuestionIndex, answer }));
   };
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "failed") {
-    return <div>Error loading quiz data</div>;
-  }
-
-  if (questions.length === 0) {
-    return <div>No questions available.</div>;
-  }
-
-  const currentQuestion = questions[currentQuestionIndex];
-  const userSelectedAnswer = selectedAnswers[currentQuestionIndex];
-  const isAnswerCorrect = results[currentQuestionIndex];
+  const optionLabels = ["A", "B", "C", "D"];
 
   return (
-    <div className="quiz-container">
-      <header className="quiz-header">
-        <h1>Quiz App - {category}</h1> {/* Display the category */}
-      </header>
+    <div className="container">
+      {/* Question number display */}
+      <div className="question-progress">
+        Question {currentQuestionIndex + 1} out of {questions.length}
+      </div>
 
-      <main className="quiz-body">
-        <div className="question-section">
-          <h2 className="question-index">
-            Question {currentQuestionIndex + 1} of {questions.length}
-          </h2>
-          <p className="question-text">{currentQuestion?.question}</p>
-        </div>
+      <h1>{currentQuestion?.question}</h1>
+      <div className="answers-container">
+        {currentQuestion?.answers.map((answer, index) => {
+          let buttonClass = "";
+          if (userSelectedAnswer) {
+            if (answer === currentQuestion.correctAnswer) {
+              buttonClass = "correct"; // Correct answer
+            } else if (answer === userSelectedAnswer) {
+              buttonClass = "incorrect"; // User-selected incorrect answer
+            }
+          }
 
-        <div className="options-section">
-          {currentQuestion?.answers?.map((option, index) => (
+          return (
             <button
               key={index}
-              className={`option ${
-                userSelectedAnswer === option
-                  ? isAnswerCorrect
-                    ? "correct"
-                    : "incorrect"
-                  : ""
-              }`}
-              onClick={() => handleAnswerSelection(option)}
+              onClick={() => handleAnswerSelection(answer)}
+              className={buttonClass}
               disabled={userSelectedAnswer !== undefined}
             >
-              {option}
+              <span className="option-label">{optionLabels[index]}</span>
+              <span className="option-text">{answer}</span>
             </button>
-          ))}
-        </div>
-
-        {userSelectedAnswer && (
-          <div className="answer-result">
-            {isAnswerCorrect ? (
-              <span className="correct-answer">Correct!</span>
-            ) : (
-              <span className="incorrect-answer">
-                Incorrect! The correct answer is:{" "}
-                {currentQuestion.correctAnswer}
-              </span>
-            )}
-          </div>
-        )}
-      </main>
-
-      <footer className="quiz-footer">
+          );
+        })}
+      </div>
+      <div className="quiz-navigation">
         <button
-          className="prev-btn"
-          onClick={handlePrevious}
+          onClick={() => dispatch(previous())}
           disabled={currentQuestionIndex === 0}
         >
           Previous
         </button>
-        <button
-          className="next-btn"
-          onClick={handleNext}
-          disabled={userSelectedAnswer === undefined}
-        >
-          Next
+        <button onClick={handleNext}>
+          {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next"}
         </button>
-      </footer>
+      </div>
     </div>
   );
 };

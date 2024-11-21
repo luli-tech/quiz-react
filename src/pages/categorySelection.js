@@ -1,48 +1,47 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import "./categorySelection.css";
 
 const CategorySelection = () => {
   const [category, setCategory] = useState("");
   const [numberOfQuestions, setNumberOfQuestions] = useState(10);
-  const navigate = useNavigate();
-
-  const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-  };
-
-  const handleNumberChange = (e) => {
-    setNumberOfQuestions(e.target.value);
-  };
-
-  const handleStartQuiz = () => {
-    if (category && numberOfQuestions > 0) {
-      navigate("/quizPage", { state: { category, numberOfQuestions } });
-    } else {
-      alert("Please select a category and enter a valid number of questions.");
-    }
-  };
 
   return (
-    <div>
-      <h1>Select Category and Number of Questions</h1>
-      <div>
-        <label>Category: </label>
-        <select value={category} onChange={handleCategoryChange}>
-          <option value="">Select Category</option>
-          <option value="General Knowledge">General Knowledge</option>
-          <option value="Entertainment">Entertainment</option>
-          {/* Add more categories here */}
-        </select>
-      </div>
-      <div>
-        <label>Number of Questions: </label>
-        <input
-          type="number"
-          value={numberOfQuestions}
-          onChange={handleNumberChange}
-        />
-      </div>
-      <button onClick={handleStartQuiz}>Start Quiz</button>
+    <div className="container">
+      <h1>Select Quiz</h1>
+      <label>Category:</label>
+      <select onChange={(e) => setCategory(e.target.value)} value={category}>
+        <option value="">Select a Category</option>
+        <option value="general_knowledge">General Knowledge</option>
+        <option value="music">Music</option>
+        <option value="history">History</option>
+        <option value="sport">sport</option>
+        <option value="education">education</option>
+        <option value="nature">nature</option>
+        <option value="government">government</option>
+        <option value="politics">politics</option>
+        <option value="science">science</option>
+        <option value="technology">technology</option>
+        <option value="medicine">medicine</option>
+        <option value="economics">economics</option>
+        <option value="legal">law</option>
+        {/* Add more categories */}
+      </select>
+      <label>Number of Questions:</label>
+      <input
+        type="number"
+        value={numberOfQuestions}
+        onChange={(e) => setNumberOfQuestions(e.target.value)}
+      />
+      {category && numberOfQuestions > 0 ? (
+        <NavLink
+          to={`/quizPage?category=${category}&numberOfQuestions=${numberOfQuestions}`}
+        >
+          <button>Start Quiz</button>
+        </NavLink>
+      ) : (
+        <p>Please select a category and number of questions.</p>
+      )}
     </div>
   );
 };

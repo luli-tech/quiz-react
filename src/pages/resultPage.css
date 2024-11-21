@@ -1,46 +1,43 @@
-.result-container {
+/* Result Page Styles .container {
   text-align: center;
-  margin-top: 20vh;
-  padding: 20px;
-  animation: fadeIn 0.5s ease-in-out;
 }
 
-.result-content {
-  background-color: #f8f9fa;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+h1 {
+  font-size: 2.5rem;
+  color: #6c63ff;
 }
 
-.result-heading {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.result-score {
+p {
   font-size: 1.5rem;
-  margin-bottom: 30px;
+  margin: 20px 0;
 }
-
-.result-actions {
+.results-actions a button {
+  width: 50px;
+}
+.result-navigation {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.action-button {
+.result-navigation button {
+  font-size: 1.2rem;
   padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
+  margin: 10px 0;
+  background-color: #6c63ff;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
+  border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
-.action-button:hover {
-  background-color: #0056b3;
+.result-navigation button:hover {
+  background-color: #4a4e69;
+  transform: scale(1.05);
 }
+
+.result-navigation button:focus {
+  outline: none;
+} */

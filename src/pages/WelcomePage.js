@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./welcomePage.css";
 import { NavLink } from "react-router-dom";
+import "./welcomePage.css";
 
 const WelcomePage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,13 +11,11 @@ const WelcomePage = () => {
 
   return (
     <div className={`welcome-container ${isVisible ? "fade-in" : ""}`}>
-      <div className="welcome-content">
-        <h1 className="welcome-heading">Welcome to the Quiz App!</h1>
-        <p className="welcome-message">Test your knowledge with fun quizzes!</p>
-        <button className="start-button">
-          <NavLink to="/category">Start Your Quiz</NavLink>
-        </button>
-      </div>
+      <h1>Welcome to the Quiz App!</h1>
+      <p>Test your knowledge with fun quizzes!</p>
+      <NavLink to="/category">
+        <button>Start Quiz</button>
+      </NavLink>
     </div>
   );
 };

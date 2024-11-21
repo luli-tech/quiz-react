@@ -1,80 +1,58 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { resetQuiz } from "../redux/store"; // Import resetQuiz action
-import { useNavigate } from "react-router-dom";
+import { resetQuiz } from "../redux/store";
+import "./resultPage.css";
 
 const ResultPage = () => {
-  const { questions, selectedAnswers, results } = useSelector(
-    (state) => state.mainSlice
-  );
+  const { questions, selectedAnswers } = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  // Calculate the total score (correct answers)
-  const totalCorrect = results.filter((result) => result === true).length;
+  // Calculate correct answers
+  const correctAnswersCount = questions.reduce((count, question, index) => {
+    return question.correctAnswer === selectedAnswers[index]
+      ? count + 1
+      : count;
+  }, 0);
 
-  // Access category and numberOfQuestions from location state
-  const { category, numberOfQuestions } = useSelector(
-    (state) => state.mainSlice // Assuming it's in state (or pass through props)
-  );
-
-  // Handle Retake Quiz button click
-  const handleRetakeQuiz = () => {
-    dispatch(resetQuiz()); // Reset the quiz state in Redux
-    navigate("/quizPage", { state: { category, numberOfQuestions } }); // Navigate to the quiz page
-  };
-
-  // Handle Take New Quiz button click
-  const handleTakeNewQuiz = () => {
-    dispatch(resetQuiz()); // Reset the quiz state in Redux
-    navigate("/category"); // Navigate to category selection page
-  };
-
-  // Handle End Quiz button click
-  const handleEndQuiz = () => {
-    navigate("/"); // Navigate back to the home page
+  const handleReset = () => {
+    dispatch(resetQuiz());
   };
 
   return (
     <div className="result-container">
-      <header className="result-header">
-        <h1>Quiz Result</h1>
-      </header>
+      <h1>Quiz Results</h1>
+      <p>
+        You got {correctAnswersCount} out of {questions.length} questions
+        correct.
+      </p>
 
-      <main className="result-body">
-        <h2>
-          You scored {totalCorrect} out of {questions.length}
-        </h2>
+      <div className="results-details">
+        {questions.map((question, index) => (
+          <div key={index} className="result-item">
+            <h3>
+              {index + 1}. {question.question}
+            </h3>
+            <p>
+              <strong>Your Answer:</strong>{" "}
+              {selectedAnswers[index] || "Not Answered"}
+            </p>
+            <p>
+              <strong>Correct Answer:</strong> {question.correctAnswer}
+            </p>
+          </div>
+        ))}
+      </div>
 
-        <div className="result-details">
-          {questions.map((question, index) => (
-            <div key={index} className="question-result">
-              <p className="question-text">
-                <strong>{question.question}</strong>
-              </p>
-              <p className="selected-answer">
-                Your answer:{" "}
-                <span
-                  className={
-                    results[index] ? "correct-answer" : "incorrect-answer"
-                  }
-                >
-                  {selectedAnswers[index]}
-                </span>
-              </p>
-              <p className="correct-answer-text">
-                Correct answer: <strong>{question.correctAnswer}</strong>
-              </p>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      <footer className="result-footer">
-        <button onClick={handleTakeNewQuiz}>Take New Quiz</button>
-        <button onClick={handleRetakeQuiz}>Retake This Quiz</button>
-        <button onClick={handleEndQuiz}>End Quiz & Go to Home</button>
-      </footer>
+      <div className="result-actions">
+        <a href="/quizPage" onClick={handleReset}>
+          <button>Retake Quiz</button>
+        </a>
+        <a href="/category" onClick={handleReset}>
+          <button>Take New Quiz</button>
+        </a>
+        <a href="/" onClick={handleReset}>
+          <button>Go to Welcome Page</button>
+        </a>
+      </div>
     </div>
   );
 };

@@ -1,89 +1,27 @@
-/* WelcomePage.css */
-
-/* Basic styles for the container */
+/* Welcome Page Styles */
 .welcome-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f8ff;
-  opacity: 0; /* Start invisible */
-  transition: opacity 2s ease-in-out;
-}
-
-.welcome-container.fade-in {
-  opacity: 1; /* Make visible when animated */
-}
-
-/* Styling the content */
-.welcome-content {
   text-align: center;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transform: translateY(30px); /* Start 30px below */
-  animation: slide-up 1s ease-out forwards; /* Slide up animation */
+  padding: 40px;
+  animation: fadeIn 1.2s ease-in-out;
+  width: 500px;
+  margin: auto;
 }
-
-/* Animation for the slide-up */
-@keyframes slide-up {
-  from {
-    transform: translateY(30px); /* Start position */
-  }
-  to {
-    transform: translateY(0px); /* End position */
-  }
+body {
 }
-
-/* Styling for the heading */
-.welcome-heading {
+.welcome-container h1 {
   font-size: 3rem;
-  color: #333;
+  color: #6c63ff;
+}
+
+.welcome-container p {
+  font-size: 1.2rem;
   margin-bottom: 20px;
-  animation: fade-in-heading 1.5s ease-out forwards; /* Heading fade-in */
 }
 
-/* Animation for the heading */
-@keyframes fade-in-heading {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Styling for the message */
-.welcome-message {
+.welcome-container button {
   font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 30px;
-  animation: fade-in-message 2s ease-out forwards;
-}
-
-/* Animation for the message */
-@keyframes fade-in-message {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Styling for the button */
-.start-button {
   padding: 15px 30px;
-  font-size: 1.2rem;
-  color: white;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.start-button:hover {
-  background-color: #45a049;
+  margin: auto;
+  max-width: 150px;
+  background-color: blue;
 }
